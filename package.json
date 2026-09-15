@@ -1,0 +1,12 @@
+{
+  "name": "funcapaze",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Sistema de reservas de canchas Funcapaze",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

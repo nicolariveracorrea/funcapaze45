@@ -1,0 +1,12 @@
+[
+  {
+    "name": "Pedro Prueba",
+    "phone": "3001234567",
+    "email": "pedro@prueba.com",
+    "reservations": 1,
+    "stamps": 1,
+    "rewardAvailable": false,
+    "paid": false,
+    "archived": false
+  }
+]

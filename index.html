@@ -1,0 +1,306 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>funcapaze</title>
+    <meta
+      name="description"
+      content="Reserva 10 canchas por hora. Precio fijo de 100.000 COP y horario de 8:00 a.m. a 10:00 p.m."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Manrope:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div id="authScreen" class="auth-screen">
+      <div class="auth-brand">
+        <span class="brand-mark">RC</span>
+        <span>funcapaze</span>
+      </div>
+      <section class="auth-card" aria-labelledby="authTitle">
+        <div class="auth-intro">
+          <p class="hero-tag">Acceso seguro</p>
+          <h1 id="authTitle">Bienvenido de nuevo</h1>
+          <p>Ingresa para gestionar tus reservas de forma simple y profesional.</p>
+        </div>
+        <div class="role-switch" role="tablist" aria-label="Tipo de cuenta">
+          <button class="role-tab active" type="button" data-role="user" role="tab" aria-selected="true">Usuario</button>
+          <button class="role-tab" type="button" data-role="admin" role="tab" aria-selected="false">Administrador</button>
+        </div>
+        <form id="loginForm" class="login-form">
+          <div class="field">
+            <label for="loginEmail">Correo electronico</label>
+            <input id="loginEmail" class="booking-input" type="email" autocomplete="email" placeholder="tu@correo.com" required />
+          </div>
+          <div class="field">
+            <label for="loginPassword">Contrasena</label>
+            <div class="password-wrap">
+              <input id="loginPassword" class="booking-input" type="password" autocomplete="current-password" placeholder="Minimo 6 caracteres" required />
+              <button id="togglePassword" class="password-toggle" type="button" aria-label="Mostrar contrasena">Ver</button>
+            </div>
+          </div>
+          <p id="loginError" class="login-error" role="alert"></p>
+          <button class="reserve-btn login-btn" type="submit">Iniciar sesion</button>
+        </form>
+
+        <form id="registerForm" class="login-form is-hidden">
+          <div class="field">
+            <label for="registerName">Nombre completo</label>
+            <input id="registerName" class="booking-input" type="text" autocomplete="name" placeholder="Tu nombre" required />
+          </div>
+          <div class="field">
+            <label for="registerEmail">Correo electronico</label>
+            <input id="registerEmail" class="booking-input" type="email" autocomplete="email" placeholder="tu@correo.com" required />
+          </div>
+          <div class="field">
+            <label for="registerPassword">Crear contrasena</label>
+            <div class="password-wrap">
+              <input id="registerPassword" class="booking-input" type="password" autocomplete="new-password" placeholder="Minimo 6 caracteres" required />
+              <button id="toggleRegisterPassword" class="password-toggle" type="button" aria-label="Mostrar contrasena">Ver</button>
+            </div>
+          </div>
+          <p id="registerError" class="login-error" role="alert"></p>
+          <button class="reserve-btn login-btn" type="submit">Crear cuenta</button>
+        </form>
+
+        <p class="demo-hint">
+          <span id="authModeLabel">¿No tienes cuenta?</span>
+          <button id="toggleAuthMode" class="text-link-button" type="button">Crear cuenta</button>
+        </p>
+        <p class="demo-hint">Demo: usuario@reservas.com / usuario123<br />Admin: admin@reservas.com / admin123</p>
+      </section>
+    </div>
+
+    <div class="bg-shape bg-shape-1" aria-hidden="true"></div>
+    <div class="bg-shape bg-shape-2" aria-hidden="true"></div>
+
+    <main id="appContent" class="container is-hidden">
+      <header class="hero">
+        <div class="topbar">
+          <div>
+            <p class="hero-tag">Reserva en segundos</p>
+            <h1>funcapaze</h1>
+          </div>
+          <div class="session-box">
+            <span id="sessionRole">Usuario</span>
+            <strong id="sessionEmail">usuario@reservas.com</strong>
+            <button id="logoutBtn" class="logout-btn" type="button">Cerrar sesion</button>
+          </div>
+        </div>
+        <p class="hero-subtitle">
+          10 canchas disponibles todos los dias de 8:00 a.m. a 10:00 p.m.
+        </p>
+      </header>
+
+      <section class="info-grid" aria-label="Informacion principal">
+        <article class="info-card">
+          <h2>Precio por hora</h2>
+          <p class="price">$100.000 COP</p>
+        </article>
+
+        <article class="info-card">
+          <h2>Horario</h2>
+          <p class="hours">8:00 a.m. - 10:00 p.m.</p>
+        </article>
+
+        <article class="info-card whatsapp-card">
+          <h2>Reserva por WhatsApp</h2>
+          <p class="hours">Escribe el numero sin espacios ni simbolos.</p>
+          <label class="wa-label" for="waNumber">Numero de WhatsApp</label>
+          <input
+            id="waNumber"
+            class="wa-input"
+            type="text"
+            inputmode="numeric"
+            autocomplete="tel"
+            placeholder="573001112233"
+            value="573001112233"
+            aria-label="Numero de WhatsApp para reservas"
+          />
+        </article>
+      </section>
+
+      <section class="court-section">
+        <div class="section-title-wrap">
+          <h2>Reserva tu cancha y selecciona cual</h2>
+          <p>Aqui ves cuales estan disponibles y reservas en un solo formulario.</p>
+        </div>
+
+        <section id="adminDashboard" class="dashboard-grid is-hidden" aria-label="Dashboard de reservas">
+          <article class="metric-card">
+            <h3>Personas que han reservado</h3>
+            <p id="totalReservations" class="metric-number">0</p>
+          </article>
+          <article class="metric-card">
+            <h3>Canchas disponibles</h3>
+            <p id="availableCourts" class="metric-number">10</p>
+          </article>
+        </section>
+
+        <section id="loyaltyPanel" class="loyalty-panel" aria-label="Programa de sellos">
+          <div class="loyalty-heading">
+            <div>
+              <p class="admin-label">Beneficio exclusivo</p>
+              <h3>Tu tarjeta de sellos</h3>
+              <p id="loyaltyMessage">Reserva y acumula sellos para ganar una hora gratis.</p>
+            </div>
+            <strong id="stampCount" class="stamp-count">0/10</strong>
+          </div>
+          <div id="stampList" class="stamp-list" aria-label="Progreso de sellos"></div>
+          <div id="rewardStatus" class="reward-status">Te faltan 10 sellos para desbloquear tu hora gratis.</div>
+        </section>
+
+        <section id="adminPanel" class="admin-panel is-hidden" aria-label="Panel de administrador">
+          <div>
+            <p class="admin-label">Modo administrador</p>
+            <h3>Control de operaciones</h3>
+            <p>Consulta el estado general y limpia las reservas de esta sesion.</p>
+          </div>
+          <button id="clearReservationsBtn" class="admin-btn" type="button">Limpiar reservas</button>
+        </section>
+
+        <section id="adminClientsPanel" class="admin-clients-panel is-hidden" aria-label="Clientes y sellos">
+          <div class="admin-clients-heading">
+            <div>
+              <p class="admin-label">Seguimiento de clientes</p>
+              <h3>Sellos y reservas por cliente</h3>
+              <p>Cada fila muestra el avance individual hacia la hora gratis.</p>
+            </div>
+            <strong id="adminClientCount" class="stamp-count">0 clientes</strong>
+          </div>
+          <div class="client-toolbar">
+            <label class="client-search-label" for="clientSearch">Buscar cliente</label>
+            <input id="clientSearch" class="booking-input client-search" type="search" placeholder="Nombre, correo o telefono" />
+            <label class="archive-toggle"><input id="showArchivedClients" type="checkbox" /> Ver archivados</label>
+          </div>
+          <div class="client-table-wrap">
+            <table class="client-table">
+              <thead>
+                <tr>
+                  <th>Cliente</th>
+                  <th>Contacto</th>
+                  <th>Reservas</th>
+                  <th>Sellos</th>
+                  <th>Beneficio</th>
+                  <th>Pago / acciones</th>
+                </tr>
+              </thead>
+              <tbody id="clientTableBody">
+                <tr><td colspan="6" class="empty-client-table">Todavia no hay clientes registrados.</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section class="booking-panel" aria-label="Formulario unico de reserva">
+          <form id="bookingForm" class="booking-form">
+            <div class="field">
+              <label for="bookingDate">Fecha de reserva</label>
+              <input id="bookingDate" class="booking-input" type="date" required />
+            </div>
+            <div class="field">
+              <label for="courtSelect">Selecciona la cancha</label>
+              <select id="courtSelect" class="booking-select" required></select>
+            </div>
+            <div class="field">
+              <label for="timeSelect">Selecciona el horario</label>
+              <select id="timeSelect" class="booking-select" required></select>
+            </div>
+            <div class="field">
+              <label for="customerName">Tu nombre</label>
+              <input
+                id="customerName"
+                class="booking-input"
+                type="text"
+                autocomplete="name"
+                placeholder="Nombre completo"
+                required
+              />
+            </div>
+            <div class="field">
+              <label for="customerPhone">Tu telefono</label>
+              <input
+                id="customerPhone"
+                class="booking-input"
+                type="text"
+                inputmode="numeric"
+                autocomplete="tel"
+                placeholder="3001112233"
+                required
+              />
+            </div>
+            <div class="field">
+              <label for="customerEmail">Tu correo</label>
+              <input
+                id="customerEmail"
+                class="booking-input"
+                type="email"
+                autocomplete="email"
+                placeholder="correo@ejemplo.com"
+                required
+              />
+            </div>
+            <button id="reserveMainBtn" class="reserve-btn reserve-main-btn" type="submit">
+              Reservar por WhatsApp
+            </button>
+          </form>
+          <p class="booking-rule">Reserva disponible para la fecha y horario seleccionados.</p>
+        </section>
+
+        <section class="availability-panel" aria-label="Estado de canchas">
+          <h3>Estado actual de canchas</h3>
+          <div id="availabilityList" class="availability-list" aria-live="polite"></div>
+        </section>
+
+        <section id="reservationsChartPanel" class="chart-panel is-hidden" aria-label="Grafico de reservas por horario">
+          <h3>Grafico de lineas: personas que han reservado</h3>
+          <p>Reservas por cada franja horaria entre 8:00 a.m. y 10:00 p.m.</p>
+          <div id="reservationsChart" class="line-chart" aria-live="polite"></div>
+        </section>
+      </section>
+    </main>
+
+    <div id="surveyModal" class="survey-modal is-hidden" role="dialog" aria-modal="true" aria-labelledby="surveyTitle">
+      <form id="surveyForm" class="survey-card">
+        <button id="closeSurveyBtn" class="survey-close" type="button" aria-label="Cerrar encuesta">&times;</button>
+        <p class="hero-tag">Ultimo paso</p>
+        <h2 id="surveyTitle">Completa tu encuesta</h2>
+        <p class="survey-intro">Tus respuestas se enviaran junto con la reserva por WhatsApp.</p>
+        <div class="field">
+          <label for="surveyReason">¿Para que necesitas la cancha?</label>
+          <select id="surveyReason" class="booking-select" required>
+            <option value="">Selecciona una opcion</option>
+            <option>Partido con amigos</option>
+            <option>Entrenamiento</option>
+            <option>Torneo</option>
+            <option>Otro motivo</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="surveyExperience">¿Como conociste Funcapaze?</label>
+          <select id="surveyExperience" class="booking-select" required>
+            <option value="">Selecciona una opcion</option>
+            <option>Recomendacion</option>
+            <option>Redes sociales</option>
+            <option>Google</option>
+            <option>Ya habia reservado</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="surveyComment">¿Tienes algun comentario?</label>
+          <textarea id="surveyComment" class="booking-input survey-comment" rows="3" maxlength="240" placeholder="Escribe un comentario (opcional)"></textarea>
+        </div>
+        <button class="reserve-btn survey-submit" type="submit">Enviar encuesta y reservar</button>
+      </form>
+    </div>
+
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
